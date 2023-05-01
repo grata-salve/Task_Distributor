@@ -10,7 +10,7 @@ const API_URL = 'http://localhost:8080/api/v1/auth/';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getPublicContent(): Observable<any> {
+  getUser(): Observable<any> {
     return this.http.get(API_URL + 'user', { responseType: 'text' });
   }
 

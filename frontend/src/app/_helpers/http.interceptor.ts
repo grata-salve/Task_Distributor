@@ -11,7 +11,8 @@ import { EventData } from '../_shared/event.class';
 export class HttpRequestInterceptor implements HttpInterceptor {
   private isRefreshing = false;
 
-  constructor(private storageService: StorageService, private eventBusService: EventBusService) { }
+  constructor(private storageService: StorageService, private eventBusService: EventBusService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.storageService.getUser().token;
@@ -23,25 +24,25 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
     return next.handle(req);
 
-    // req = req.clone({
-    //   withCredentials: true,
-    //   //headers: req.headers.set("Bearer ", this.storageService.getUser())
+    //   req = req.clone({
+    //     withCredentials: true,
+    //     headers: req.headers.set('Authorization', "Bearer " + this.storageService.getUser().token)
     //
-    // });
-
-    // return next.handle(req).pipe(
-    //   catchError((error) => {
-    //     if (
-    //       error instanceof HttpErrorResponse &&
-    //       !req.url.includes('auth/signin') &&
-    //       error.status === 401
-    //     ) {
-    //       return this.handle401Error(req, next);
-    //     }
+    //   });
     //
-    //     return throwError(() => error);
-    //   })
-    // );
+    //   return next.handle(req).pipe(
+    //     catchError((error) => {
+    //       if (
+    //         error instanceof HttpErrorResponse &&
+    //         !req.url.includes('auth/signin') &&
+    //         error.status === 401
+    //       ) {
+    //         return this.handle401Error(req, next);
+    //       }
+    //
+    //       return throwError(() => error);
+    //     })
+    //   );
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {

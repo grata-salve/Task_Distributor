@@ -43,6 +43,7 @@ public class ActionLogsService {
     return actionLogsMapper.toActionLogsDtos(actionLogs);
   }
 
+  @Transactional
   public void saveLogs(Task task, Action action) {
     User user = (User) SecurityContextHolder.getContext().
         getAuthentication().getPrincipal();

@@ -1,5 +1,6 @@
 package com.taskDistributor.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -46,6 +47,7 @@ public class User extends AbstractIdentifiable implements UserDetails {
   }
 
   @Override
+  @JsonIgnore
   public String getPassword() {
     return password;
   }
