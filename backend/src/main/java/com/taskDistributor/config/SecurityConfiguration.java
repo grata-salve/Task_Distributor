@@ -28,6 +28,8 @@ public class SecurityConfiguration {
     http
         .csrf()
         .disable()
+        .cors()
+        .and()
         .authorizeHttpRequests()
         .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**"))
         .permitAll()

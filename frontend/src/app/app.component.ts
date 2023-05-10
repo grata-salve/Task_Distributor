@@ -28,13 +28,13 @@ export class AppComponent {
     this.isLoggedIn = this.storageService.isLoggedIn();
 
     if (this.isLoggedIn) {
-      const user = this.storageService.getUser();
+      //const user = User.getInstance();
       //this.roles = user.roles;
 
       //this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       //this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
-      this.email = user.email;
+      //this.email = user.email;
     }
 
     this.eventBusSub = this.eventBusService.on('logout', () => {

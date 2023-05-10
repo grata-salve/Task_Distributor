@@ -1,5 +1,11 @@
 <div class="container">
   <header class="jumbotron">
     <p>{{ content }}</p>
+
+    <div *ngFor="let tasks of userTasks">
+      <h3>{{tasks.status}}</h3>
+    </div>
+
+
   </header>
 </div>

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
+import {DashboardService} from "../_services/dashboard.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Task} from "../models/Task";
+import {StorageService} from "../_services/storage.service";
 
 @Component({
   selector: 'app-home',
@@ -8,26 +11,28 @@ import { UserService } from '../_services/user.service';
 })
 export class HomeComponent implements OnInit {
   content?: string;
+  userTasks?: Task[]
 
-  constructor(private userService: UserService) { }
+  constructor(private dashboardService: DashboardService, private storageService: StorageService) {
+  }
 
   ngOnInit(): void {
-    this.userService.getPublicContent().subscribe({
-      next: data => {
-        this.content = data;
-      },
-      error: err => {
-        if (err.error) {
-          try {
-            const res = JSON.parse(err.error);
-            this.content = res.message;
-          } catch {
-            this.content = `Error with status: ${err.status} - ${err.statusText}`;
-          }
-        } else {
-          this.content = `Error with status: ${err.status}`;
-        }
-      }
-    });
+    if (sessionStorage.getItem('Authorization')) {
+
+      this.loadUserTasksList(this.storageService.getUserDetails().id)
+
+    }
   }
+
+  public loadUserTasksList(userId: number) {
+    this.dashboardService.getUserTasksList(userId).subscribe(
+      (response: Task[]) => {
+        this.userTasks = response
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    )
+  }
+
 }

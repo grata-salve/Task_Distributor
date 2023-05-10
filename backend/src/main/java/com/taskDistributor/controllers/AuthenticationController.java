@@ -4,11 +4,9 @@ import com.taskDistributor.models.auth.AuthenticationRequest;
 import com.taskDistributor.models.auth.AuthenticationResponse;
 import com.taskDistributor.models.auth.RegisterRequest;
 import com.taskDistributor.services.AuthenticationService;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,12 +40,4 @@ public class AuthenticationController {
   public Object getUser(Authentication authentication) {
     return authentication.getPrincipal();
   }
-
-  //TODO: ???
-  @GetMapping("/google")
-  @ResponseStatus(HttpStatus.OK)
-  public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
-    return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-  }
-
 }

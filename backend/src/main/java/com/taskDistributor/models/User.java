@@ -1,5 +1,6 @@
 package com.taskDistributor.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -38,39 +39,44 @@ public class User extends AbstractIdentifiable implements UserDetails {
   @NotBlank
   private String password;
 
-  // Role???
-
   @Override
+  @JsonIgnore
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return null;
   }
 
   @Override
+  @JsonIgnore
   public String getPassword() {
     return password;
   }
 
   @Override
+  @JsonIgnore
   public String getUsername() {
     return email;
   }
 
   @Override
+  @JsonIgnore
   public boolean isAccountNonExpired() {
     return true;
   }
 
   @Override
+  @JsonIgnore
   public boolean isAccountNonLocked() {
     return true;
   }
 
   @Override
+  @JsonIgnore
   public boolean isCredentialsNonExpired() {
     return true;
   }
 
   @Override
+  @JsonIgnore
   public boolean isEnabled() {
     return true;
   }
