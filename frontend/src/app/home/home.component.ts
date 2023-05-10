@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
 import {DashboardService} from "../_services/dashboard.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Task} from "../models/Task";
+import {StorageService} from "../_services/storage.service";
 
 @Component({
   selector: 'app-home',
@@ -9,48 +11,28 @@ import {DashboardService} from "../_services/dashboard.service";
 })
 export class HomeComponent implements OnInit {
   content?: string;
+  userTasks?: Task[]
 
-  constructor(private dashboardService: DashboardService, private userService: UserService) {
+  constructor(private dashboardService: DashboardService, private storageService: StorageService) {
   }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('Authorization')) {
 
-    this.dashboardService.getUserTasksList(1).subscribe({
-      next: data => {
-        this.content = data;
-        console.log(data)
-      },
-      error: err => {
-        if (err.error) {
-          try {
-            const res = JSON.parse(err.error);
-            this.content = res.message;
-          } catch {
-            this.content = `Error with status: ${err.status} - ${err.statusText}`;
-          }
-        } else {
-          this.content = `Error with status: ${err.status}`;
-        }
-      }
-    });
+      this.loadUserTasksList(this.storageService.getUserDetails().id)
 
-
-    this.userService.getUser().subscribe({
-      next: data => {
-        this.content = data;
-      },
-      error: err => {
-        if (err.error) {
-          try {
-            const res = JSON.parse(err.error);
-            this.content = res.message;
-          } catch {
-            this.content = `Error with status: ${err.status} - ${err.statusText}`;
-          }
-        } else {
-          this.content = `Error with status: ${err.status}`;
-        }
-      }
-    });
+    }
   }
+
+  public loadUserTasksList(userId: number) {
+    this.dashboardService.getUserTasksList(userId).subscribe(
+      (response: Task[]) => {
+        this.userTasks = response
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    )
+  }
+
 }
