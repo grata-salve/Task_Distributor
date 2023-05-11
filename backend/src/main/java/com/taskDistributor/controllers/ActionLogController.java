@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/logs")
 @RequiredArgsConstructor
-public class ActionLogsController {
+public class ActionLogController {
 
     private final ActionLogService actionLogService;
 
