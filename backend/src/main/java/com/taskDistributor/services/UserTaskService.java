@@ -3,7 +3,7 @@ package com.taskDistributor.services;
 import com.taskDistributor.models.Task;
 import com.taskDistributor.models.UserTask;
 import com.taskDistributor.models.enums.Action;
-import com.taskDistributor.repositories.UserTasksRepository;
+import com.taskDistributor.repositories.UserTaskRepository;
 import com.taskDistributor.services.dtos.TaskDto;
 import com.taskDistributor.services.dtos.UserTaskDto;
 import com.taskDistributor.services.dtos.mappers.TaskMapper;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserTaskService {
 
-  private final UserTasksRepository userTasksRepository;
+  private final UserTaskRepository userTaskRepository;
   private final ActionLogService actionLogService;
   private final UserTaskMapper userTaskMapper;
   private final TaskMapper taskMapper;
@@ -27,19 +27,19 @@ public class UserTaskService {
   public UserTaskDto assignMember(UserTaskDto userTaskDto) {
     UserTask userTask = userTaskMapper.toModel(userTaskDto);
     actionLogService.saveLogs(userTask.getTask(), Action.MEMBER_ASSIGNED);
-    return userTaskMapper.toDto(userTasksRepository.save(userTask));
+    return userTaskMapper.toDto(userTaskRepository.save(userTask));
   }
 
   @Transactional(readOnly = true)
   public List<TaskDto> getUserTasks(Long userId) {
-    List<Task> userTasks = userTasksRepository.findAllTasksByUserId(userId).orElseThrow(
+    List<Task> userTasks = userTaskRepository.findAllTasksByUserId(userId).orElseThrow(
         UserHasNoTasksException::new);
     return taskMapper.toTaskDtos(userTasks);
   }
 
   @Transactional(readOnly = true)
   public List<TaskDto> getTeamTasks(Long teamId) {
-    List<Task> userTasks = userTasksRepository.findAllTasksByTeamId(teamId).orElseThrow(
+    List<Task> userTasks = userTaskRepository.findAllTasksByTeamId(teamId).orElseThrow(
         TeamHasNoTasksException::new);
     return taskMapper.toTaskDtos(userTasks);
   }

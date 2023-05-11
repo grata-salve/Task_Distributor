@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserTeamsRepository extends JpaRepository<UserTeam, Long> {
+public interface UserTeamRepository extends JpaRepository<UserTeam, Long> {
 
   @Modifying
   @Query("DELETE FROM UserTeam ut WHERE ut.user.id = :userId")

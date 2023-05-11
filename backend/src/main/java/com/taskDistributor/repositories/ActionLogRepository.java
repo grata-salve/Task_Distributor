@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ActionLogsRepository extends JpaRepository<ActionLog, Long> {
+public interface ActionLogRepository extends JpaRepository<ActionLog, Long> {
 
   @Query("SELECT al FROM ActionLog al WHERE al.user.id = :userId")
   Optional<List<ActionLog>> findAllByUserId(@Param("userId") Long userId);
