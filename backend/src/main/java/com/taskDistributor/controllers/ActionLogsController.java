@@ -1,7 +1,7 @@
 package com.taskDistributor.controllers;
 
-import com.taskDistributor.services.ActionLogsService;
-import com.taskDistributor.services.dtos.ActionLogsDto;
+import com.taskDistributor.services.ActionLogService;
+import com.taskDistributor.services.dtos.ActionLogDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,23 +13,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActionLogsController {
 
-    private final ActionLogsService actionLogsService;
+    private final ActionLogService actionLogService;
 
-    @GetMapping("/getById/{logId}")
+    @GetMapping("/get/{logId}")
     @ResponseStatus(HttpStatus.OK)
-    public ActionLogsDto getActionLog(@PathVariable Long logId) {
-        return actionLogsService.getActionLogsById(logId);
+    public ActionLogDto getActionLog(@PathVariable Long logId) {
+        return actionLogService.getActionLogsById(logId);
     }
 
-    @GetMapping("/allByUserId/{userId}")
+    @GetMapping("/getUserLogs/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ActionLogsDto> filterByUserId(@PathVariable Long userId) {
-        return actionLogsService.getLogsByUserId(userId);
+    public List<ActionLogDto> getActionLogsByUser(@PathVariable Long userId) {
+        return actionLogService.getLogsByUserId(userId);
     }
 
-    @GetMapping("/allByTaskId/{taskId}")
+    @GetMapping("/getTaskLogs/{taskId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ActionLogsDto> filterByTaskId(@PathVariable Long taskId) {
-        return actionLogsService.getLogsByTaskId(taskId);
+    public List<ActionLogDto> getActionLogsByTask(@PathVariable Long taskId) {
+        return actionLogService.getLogsByTaskId(taskId);
     }
 }

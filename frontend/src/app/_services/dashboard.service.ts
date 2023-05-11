@@ -9,10 +9,14 @@ const API_URL = `${environment.apiBaseUrl}/dashboard`;
   providedIn: 'root'
 })
 export class DashboardService {
-  constructor(private http: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
-  getUserTasksList(userId: number): Observable<any> {
-    return this.http.get<any>(`${API_URL}/userTasks/${userId}`);
+  getUserTasks(userId: number): Observable<any> {
+    return this.httpClient.get<any>(`${API_URL}/userTasks/${userId}`);
+  }
+
+  getTeamTasks(teamId: number): Observable<any> {
+    return this.httpClient.get(`${API_URL}/teamTasks/${teamId}`)
   }
 }

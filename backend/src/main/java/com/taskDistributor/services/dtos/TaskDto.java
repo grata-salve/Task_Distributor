@@ -21,6 +21,6 @@ public class TaskDto implements Serializable {
   @NotBlank
   private String taskName;
   private String description;
-  private LocalDateTime creationDate;
+  private LocalDateTime deadline;
   private Status status;
 }

@@ -1,7 +1,7 @@
 import { Task } from "./Task";
 import { User } from "./User";
 
-export interface UserTasks {
+export interface UserTask {
   id: number;
   user: User;
   task: Task;

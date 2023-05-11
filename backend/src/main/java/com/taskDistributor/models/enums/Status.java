@@ -1,5 +1,5 @@
 package com.taskDistributor.models.enums;
 
 public enum Status {
-  ACTIVE, COMPLETED
+  CREATED, UPDATED, ACTIVE, COMPLETED
 }

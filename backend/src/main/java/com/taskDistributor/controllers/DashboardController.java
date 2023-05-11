@@ -1,6 +1,6 @@
 package com.taskDistributor.controllers;
 
-import com.taskDistributor.services.UserTasksService;
+import com.taskDistributor.services.UserTaskService;
 import com.taskDistributor.services.dtos.TaskDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DashboardController {
 
-  private final UserTasksService userTasksService;
+  private final UserTaskService userTaskService;
 
   @GetMapping("/userTasks/{userId}")
   @ResponseStatus(HttpStatus.OK)
   public List<TaskDto> getUserTasks(@PathVariable Long userId) {
-    return userTasksService.getUserTasks(userId);
+    return userTaskService.getUserTasks(userId);
   }
 
   @GetMapping("/teamTasks/{teamId}")
   @ResponseStatus(HttpStatus.OK)
   public List<TaskDto> getTeamTasks(@PathVariable Long teamId) {
-    return userTasksService.getTeamTasks(teamId);
+    return userTaskService.getTeamTasks(teamId);
   }
 }

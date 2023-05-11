@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from "../../environments/environment";
 
-const API_URL = 'http://localhost:8080/api/v1/auth/';
+const API_URL = `${environment.apiBaseUrl}/api/v1/auth`;
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
+    return this.http.get(`${API_URL}/user`, { responseType: 'text' });
   }
 
   getUserBoard(): Observable<any> {

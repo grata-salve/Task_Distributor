@@ -1,5 +1,6 @@
 package com.taskDistributor.models;
 
+import com.taskDistributor.models.enums.Action;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import javax.persistence.Entity;
@@ -7,28 +8,33 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "user_tasks")
-public class UserTasks extends AbstractIdentifiable {
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Table(name = "action_logs")
+public class ActionLog extends AbstractIdentifiable {
 
   @ManyToOne
-  @NotNull
-  private User user;
-
-  @ManyToOne
-  @NotNull
   private Task task;
 
+  @ManyToOne
+  private User user;
+
   @NotNull
-  private LocalDateTime assignDate;
+  private Action action;
+
+  @NotNull
+  private LocalDateTime actionDateTime;
 
   @PrePersist
   public void prePersist() {
-    this.assignDate = LocalDateTime.now(ZoneOffset.UTC);
+    this.actionDateTime = LocalDateTime.now(ZoneOffset.UTC);
   }
 }

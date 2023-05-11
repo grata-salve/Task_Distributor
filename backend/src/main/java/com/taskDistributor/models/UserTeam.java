@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "user_teams")
-public class UserTeams extends AbstractIdentifiable {
+public class UserTeam extends AbstractIdentifiable {
 
   @ManyToOne
   @NotNull

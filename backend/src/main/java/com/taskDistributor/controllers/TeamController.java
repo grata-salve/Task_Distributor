@@ -1,10 +1,10 @@
 package com.taskDistributor.controllers;
 
 import com.taskDistributor.services.TeamService;
-import com.taskDistributor.services.UserTeamsService;
+import com.taskDistributor.services.UserTeamService;
 import com.taskDistributor.services.dtos.TeamDto;
 import com.taskDistributor.services.dtos.UserDto;
-import com.taskDistributor.services.dtos.UserTeamsDto;
+import com.taskDistributor.services.dtos.UserTeamDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeamController {
 
   private final TeamService teamService;
-  private final UserTeamsService userTeamsService;
+  private final UserTeamService userTeamService;
 
   @PostMapping("/create")
   @ResponseStatus(HttpStatus.CREATED)
@@ -52,14 +52,14 @@ public class TeamController {
 
   @PostMapping("/addMember")
   @ResponseStatus(HttpStatus.CREATED)
-  public UserTeamsDto addMember(@RequestBody UserTeamsDto userTeamsDto) {
-    return userTeamsService.addMember(userTeamsDto);
+  public UserTeamDto addMember(@RequestBody UserTeamDto userTeamDto) {
+    return userTeamService.addMember(userTeamDto);
   }
 
   @DeleteMapping("/removeMember/{userId}")
   @ResponseStatus(HttpStatus.OK)
   public UserDto removeMember(@PathVariable Long userId) {
-    return userTeamsService.removeMember(userId);
+    return userTeamService.removeMember(userId);
   }
 
 }

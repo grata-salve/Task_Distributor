@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   }
 
   public loadUserTasksList(userId: number) {
-    this.dashboardService.getUserTasksList(userId).subscribe(
+    this.dashboardService.getUserTasks(userId).subscribe(
       (response: Task[]) => {
         this.userTasks = response
       },

@@ -1,0 +1,8 @@
+export enum Action {
+  CREATED,
+  COMPLETED,
+  UPDATED,
+  DELETED,
+  STATUS_CHANGED,
+  MEMBER_ASSIGNED
+}
