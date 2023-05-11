@@ -1,9 +1,10 @@
 package com.taskDistributor.controllers;
 
+import com.taskDistributor.models.Task;
 import com.taskDistributor.services.TaskService;
-import com.taskDistributor.services.UserTasksService;
+import com.taskDistributor.services.UserTaskService;
 import com.taskDistributor.services.dtos.TaskDto;
-import com.taskDistributor.services.dtos.UserTasksDto;
+import com.taskDistributor.services.dtos.UserTaskDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
   private final TaskService taskService;
-  private final UserTasksService userTasksService;
+  private final UserTaskService userTaskService;
 
   @PostMapping("/create")
   @ResponseStatus(HttpStatus.CREATED)
@@ -36,11 +37,10 @@ public class TaskController {
     return taskService.getTaskById(taskId);
   }
 
-  @PutMapping("/edit/{taskId}")
+  @PutMapping("/update")
   @ResponseStatus(HttpStatus.OK)
-  public TaskDto editTask(@RequestBody TaskDto taskDto,
-      @PathVariable Long taskId) {
-    return taskService.editTask(taskDto, taskId);
+  public TaskDto updateTask(@RequestBody Task task) {
+    return taskService.updateTask(task);
   }
 
   @DeleteMapping("/delete/{taskId}")
@@ -51,8 +51,8 @@ public class TaskController {
 
   @PostMapping("/assignMember")
   @ResponseStatus(HttpStatus.CREATED)
-  public UserTasksDto assignMember(@RequestBody UserTasksDto userTasksDto) {
-    return userTasksService.assignMember(userTasksDto);
+  public UserTaskDto assignMember(@RequestBody UserTaskDto userTaskDto) {
+    return userTaskService.assignMember(userTaskDto);
   }
 
   @PutMapping("/complete/{taskId}/{status}")

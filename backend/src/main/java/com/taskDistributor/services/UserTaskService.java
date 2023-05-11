@@ -1,13 +1,13 @@
 package com.taskDistributor.services;
 
 import com.taskDistributor.models.Task;
-import com.taskDistributor.models.UserTasks;
+import com.taskDistributor.models.UserTask;
 import com.taskDistributor.models.enums.Action;
 import com.taskDistributor.repositories.UserTasksRepository;
 import com.taskDistributor.services.dtos.TaskDto;
-import com.taskDistributor.services.dtos.UserTasksDto;
+import com.taskDistributor.services.dtos.UserTaskDto;
 import com.taskDistributor.services.dtos.mappers.TaskMapper;
-import com.taskDistributor.services.dtos.mappers.UserTasksMapper;
+import com.taskDistributor.services.dtos.mappers.UserTaskMapper;
 import com.taskDistributor.util.exceptions.TeamHasNoTasksException;
 import com.taskDistributor.util.exceptions.UserHasNoTasksException;
 import java.util.List;
@@ -17,17 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserTasksService {
+public class UserTaskService {
 
   private final UserTasksRepository userTasksRepository;
-  private final ActionLogsService actionLogsService;
-  private final UserTasksMapper userTasksMapper;
+  private final ActionLogService actionLogService;
+  private final UserTaskMapper userTaskMapper;
   private final TaskMapper taskMapper;
 
-  public UserTasksDto assignMember(UserTasksDto userTasksDto) {
-    UserTasks userTasks = userTasksMapper.toModel(userTasksDto);
-    actionLogsService.saveLogs(userTasks.getTask(), Action.MEMBER_ASSIGNED);
-    return userTasksMapper.toDto(userTasksRepository.save(userTasks));
+  public UserTaskDto assignMember(UserTaskDto userTaskDto) {
+    UserTask userTask = userTaskMapper.toModel(userTaskDto);
+    actionLogService.saveLogs(userTask.getTask(), Action.MEMBER_ASSIGNED);
+    return userTaskMapper.toDto(userTasksRepository.save(userTask));
   }
 
   @Transactional(readOnly = true)

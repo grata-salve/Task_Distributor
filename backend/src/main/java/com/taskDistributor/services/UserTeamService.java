@@ -1,13 +1,13 @@
 package com.taskDistributor.services;
 
 import com.taskDistributor.models.User;
-import com.taskDistributor.models.UserTeams;
+import com.taskDistributor.models.UserTeam;
 import com.taskDistributor.repositories.UserRepository;
 import com.taskDistributor.repositories.UserTeamsRepository;
 import com.taskDistributor.services.dtos.UserDto;
-import com.taskDistributor.services.dtos.UserTeamsDto;
+import com.taskDistributor.services.dtos.UserTeamDto;
 import com.taskDistributor.services.dtos.mappers.UserMapper;
-import com.taskDistributor.services.dtos.mappers.UserTeamsMapper;
+import com.taskDistributor.services.dtos.mappers.UserTeamMapper;
 import com.taskDistributor.util.exceptions.UserNotFoundException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserTeamsService {
+public class UserTeamService {
 
   private final UserTeamsRepository userTeamsRepository;
   private final UserRepository userRepository;
-  private final UserTeamsMapper userTeamsMapper;
+  private final UserTeamMapper userTeamMapper;
   private final UserMapper userMapper;
 
-  public UserTeamsDto addMember(UserTeamsDto userTeamsDto) {
-    UserTeams userTeams = userTeamsMapper.toModel(userTeamsDto);
-    return userTeamsMapper.toDto(userTeamsRepository.save(userTeams));
+  public UserTeamDto addMember(UserTeamDto userTeamDto) {
+    UserTeam userTeam = userTeamMapper.toModel(userTeamDto);
+    return userTeamMapper.toDto(userTeamsRepository.save(userTeam));
   }
 
   @Transactional

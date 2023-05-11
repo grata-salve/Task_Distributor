@@ -1,7 +1,7 @@
 package com.taskDistributor.services.dtos.mappers;
 
-import com.taskDistributor.models.UserTasks;
-import com.taskDistributor.services.dtos.UserTasksDto;
+import com.taskDistributor.models.UserTeam;
+import com.taskDistributor.services.dtos.UserTeamDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -9,14 +9,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public interface UserTasksMapper {
+public interface UserTeamMapper {
 
-  UserTasks toModel(UserTasksDto userTasksDto);
+  UserTeam toModel(UserTeamDto userTeamDto);
 
-  UserTasksDto toDto(UserTasks userTasks);
+  UserTeamDto toDto(UserTeam userTeam);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  UserTasks updateUserTasksFromUserTasksDto(
-      UserTasksDto userTasksDto,
-      @MappingTarget UserTasks userTasks);
+  UserTeam updateUserTeamsFromUserTeamsDto(
+      UserTeamDto userTeamDto, @MappingTarget UserTeam userTeam);
 }

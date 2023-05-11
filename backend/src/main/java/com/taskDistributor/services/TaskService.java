@@ -16,12 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class TaskService {
 
   private final TaskRepository taskRepository;
-  private final ActionLogsService actionLogsService;
+  private final ActionLogService actionLogService;
   private final TaskMapper taskMapper;
 
   public TaskDto createTask(TaskDto taskDto) {
     Task task = taskRepository.save(taskMapper.toModel(taskDto));
-    actionLogsService.saveLogs(task, Action.CREATED);
+    actionLogService.saveLogs(task, Action.CREATED);
     return taskMapper.toDto(task);
   }
 
@@ -31,29 +31,24 @@ public class TaskService {
     return taskMapper.toDto(task);
   }
 
-  //TODO: update
   @Transactional
-  public TaskDto editTask(TaskDto taskDto, Long taskId) {
-    Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
-    task.setTaskName(taskDto.getTaskName());
-    task.setDescription(taskDto.getDescription());
-    task.setCreationDate(taskDto.getCreationDate());
-    task.setStatus(taskDto.getStatus());
-    actionLogsService.saveLogs(task, Action.EDITED);
-    return taskMapper.toDto(task);
+  public TaskDto updateTask(Task task) {
+    actionLogService.saveLogs(task, Action.UPDATED);
+    return taskMapper.toDto(taskRepository.save(task));
   }
 
   public TaskDto deleteTask(Long taskId) {
     Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
     taskRepository.deleteById(taskId);
-    actionLogsService.saveLogs(task, Action.DELETED);
+    actionLogService.saveLogs(task, Action.DELETED);
     return taskMapper.toDto(task);
   }
 
+  //TODO: ???
   public TaskDto changeTaskStatus(Long taskId, String status) {
     Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
     task.setStatus(Status.valueOf(status.toUpperCase()));
-    actionLogsService.saveLogs(task, Action.STATUS_CHANGED);
+    actionLogService.saveLogs(task, Action.STATUS_CHANGED);
     return taskMapper.toDto(taskRepository.save(task));
   }
 }

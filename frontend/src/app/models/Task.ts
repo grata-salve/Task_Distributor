@@ -5,6 +5,6 @@ export interface Task {
   team: Team;
   taskName: string;
   description: string;
-  creationDate: Date;
+  deadline: Date;
   status: string;
 }
