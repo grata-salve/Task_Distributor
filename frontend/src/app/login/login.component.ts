@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { StorageService } from '../_services/storage.service';
 import {UserService} from "../_services/user.service";
+import {AppConstants} from "../common/app.constants";
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   userDetails: string = '';
+  googleUrl = AppConstants.GOOGLE_AUTH_URL
 
   constructor(private authService: AuthService, private storageService: StorageService,
               private userService: UserService) { }

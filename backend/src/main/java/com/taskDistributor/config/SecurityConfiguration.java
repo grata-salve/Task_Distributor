@@ -31,7 +31,7 @@ public class SecurityConfiguration {
         .cors()
         .and()
         .authorizeHttpRequests()
-        .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**"))
+        .requestMatchers(new AntPathRequestMatcher("/auth/**"))
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -42,7 +42,7 @@ public class SecurityConfiguration {
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         .logout()
-        .logoutUrl("/api/v1/auth/logout")
+        .logoutUrl("/auth/logout")
         .addLogoutHandler(logoutHandler)
         .logoutSuccessHandler(
             (request, response, authentication) -> SecurityContextHolder.clearContext());
