@@ -22,6 +22,7 @@ public class UserTeamService {
   private final UserTeamMapper userTeamMapper;
   private final UserMapper userMapper;
 
+  @Transactional
   public UserTeamDto addMember(UserTeamDto userTeamDto) {
     UserTeam userTeam = userTeamMapper.toModel(userTeamDto);
     return userTeamMapper.toDto(userTeamRepository.save(userTeam));

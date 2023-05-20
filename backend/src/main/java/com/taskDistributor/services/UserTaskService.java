@@ -24,6 +24,7 @@ public class UserTaskService {
   private final UserTaskMapper userTaskMapper;
   private final TaskMapper taskMapper;
 
+  @Transactional
   public UserTaskDto assignMember(UserTaskDto userTaskDto) {
     UserTask userTask = userTaskMapper.toModel(userTaskDto);
     actionLogService.saveLogs(userTask.getTask(), Action.MEMBER_ASSIGNED);

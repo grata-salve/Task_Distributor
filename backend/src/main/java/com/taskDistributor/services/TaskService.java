@@ -19,6 +19,7 @@ public class TaskService {
   private final ActionLogService actionLogService;
   private final TaskMapper taskMapper;
 
+  @Transactional
   public TaskDto createTask(TaskDto taskDto) {
     Task task = taskRepository.save(taskMapper.toModel(taskDto));
     actionLogService.saveLogs(task, Action.CREATED);
@@ -37,6 +38,7 @@ public class TaskService {
     return taskMapper.toDto(taskRepository.save(task));
   }
 
+  @Transactional
   public TaskDto deleteTask(Long taskId) {
     Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
     taskRepository.deleteById(taskId);
