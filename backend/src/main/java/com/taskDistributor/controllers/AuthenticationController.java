@@ -20,20 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
   private final AuthenticationService service;
-
-  @PostMapping("/register")
-  @ResponseStatus(HttpStatus.CREATED)
-  public AuthenticationResponse register(
-      @RequestBody RegisterRequest request) {
-    return service.register(request);
-  }
-
-  @PostMapping("/authenticate")
-  @ResponseStatus(HttpStatus.OK)
-  public AuthenticationResponse authenticate(
-      @RequestBody AuthenticationRequest request) {
-    return service.authenticate(request);
-  }
+//
+//  @PostMapping("/register")
+//  @ResponseStatus(HttpStatus.CREATED)
+//  public AuthenticationResponse register(
+//      @RequestBody RegisterRequest request) {
+//    return service.register(request);
+//  }
+//
+//  @PostMapping("/authenticate")
+//  @ResponseStatus(HttpStatus.OK)
+//  public AuthenticationResponse authenticate(
+//      @RequestBody AuthenticationRequest request) {
+//    return service.authenticate(request);
+//  }
 
   @GetMapping("/user")
   @ResponseStatus(HttpStatus.OK)

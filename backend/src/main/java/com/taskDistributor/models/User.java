@@ -1,83 +1,109 @@
 package com.taskDistributor.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Collection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import javax.validation.constraints.NotNull;
 
-/**
- * User class.
- */
 @Entity
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "users")
-public class User extends AbstractIdentifiable implements UserDetails {
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @NotBlank
-  private String firstname;
+    @Column(nullable = false)
+    private String name;
 
-  @NotBlank
-  private String lastname;
+    @Email
+    @Column(nullable = false)
+    private String email;
 
-  @NotBlank
-  @Email
-  private String email;
+    private String imageUrl;
 
-  @NotBlank
-  private String password;
+    @Column(nullable = false)
+    private Boolean emailVerified = false;
 
-  @Override
-  @JsonIgnore
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
-  }
+    @JsonIgnore
+    private String password;
 
-  @Override
-  @JsonIgnore
-  public String getPassword() {
-    return password;
-  }
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
 
-  @Override
-  @JsonIgnore
-  public String getUsername() {
-    return email;
-  }
+    private String providerId;
 
-  @Override
-  @JsonIgnore
-  public boolean isAccountNonExpired() {
-    return true;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  @Override
-  @JsonIgnore
-  public boolean isAccountNonLocked() {
-    return true;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  @Override
-  @JsonIgnore
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
+    public String getName() {
+        return name;
+    }
 
-  @Override
-  @JsonIgnore
-  public boolean isEnabled() {
-    return true;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(AuthProvider provider) {
+        this.provider = provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
 }
