@@ -16,7 +16,7 @@ export class BoardUserComponent implements OnInit {
   ngOnInit(): void {
     //this.content = User.getInstance().email
 
-    this.content = this.storageService.getUserDetails()
+    this.content = this.storageService.getUser()
 
 
   }

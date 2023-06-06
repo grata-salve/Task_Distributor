@@ -1,17 +1,8 @@
 package com.taskDistributor.controllers;
 
-import com.taskDistributor.models.auth.AuthenticationRequest;
-import com.taskDistributor.models.auth.AuthenticationResponse;
-import com.taskDistributor.models.auth.RegisterRequest;
-import com.taskDistributor.services.AuthenticationService;
+import com.taskDistributor.services.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-  private final AuthenticationService service;
+  private final AuthService service;
 //
 //  @PostMapping("/register")
 //  @ResponseStatus(HttpStatus.CREATED)
@@ -35,9 +26,9 @@ public class AuthenticationController {
 //    return service.authenticate(request);
 //  }
 
-  @GetMapping("/user")
-  @ResponseStatus(HttpStatus.OK)
-  public Object getUser(Authentication authentication) {
-    return authentication.getPrincipal();
-  }
+//  @GetMapping("/user")
+//  @ResponseStatus(HttpStatus.OK)
+//  public Object getUser(Authentication authentication) {
+//    return authentication.getPrincipal();
+//  }
 }

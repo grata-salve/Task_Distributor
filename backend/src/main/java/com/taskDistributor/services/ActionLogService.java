@@ -43,6 +43,7 @@ public class ActionLogService {
     return actionLogMapper.toActionLogsDtos(actionLogs);
   }
 
+  //TODO: mapper
   @Transactional
   public void saveLogs(Task task, Action action) {
     User user = (User) SecurityContextHolder.getContext().

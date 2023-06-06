@@ -15,6 +15,8 @@ public class ActionLogController {
 
     private final ActionLogService actionLogService;
 
+    //TODO: @Valid in all controllers.
+
     @GetMapping("/get/{logId}")
     @ResponseStatus(HttpStatus.OK)
     public ActionLogDto getActionLog(@PathVariable Long logId) {

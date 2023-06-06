@@ -13,14 +13,12 @@ export class HomeComponent implements OnInit {
   content?: string;
   userTasks?: Task[]
 
-  constructor(private dashboardService: DashboardService, private storageService: StorageService) {
-  }
+  constructor(private dashboardService: DashboardService, private storageService: StorageService)
+  { }
 
   ngOnInit(): void {
-    if (sessionStorage.getItem('Authorization')) {
-
-      this.loadUserTasksList(this.storageService.getUserDetails().id)
-
+    if (this.storageService.isLoggedIn()) {
+      this.loadUserTasksList(this.storageService.getUser().id)
     }
   }
 

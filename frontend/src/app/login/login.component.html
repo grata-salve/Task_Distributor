@@ -22,6 +22,7 @@
           [(ngModel)]="form.email"
           required
           #email="ngModel"
+          autocomplete="username"
           [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
         />
         <div *ngIf="email.errors && f.submitted" class="invalid-feedback">
@@ -38,6 +39,7 @@
           [(ngModel)]="form.password"
           required
           minlength="4"
+          autocomplete="current-password"
           #password="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
         />
