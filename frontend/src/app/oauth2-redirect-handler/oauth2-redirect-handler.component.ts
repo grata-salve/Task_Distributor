@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import {ACCESS_TOKEN, COOKIE_EXPIRY_DAYS} from "../constants/app.constants";
 import {StorageService} from "../_services/storage.service";
 
 @Component({
@@ -22,10 +21,6 @@ export class OAuth2RedirectHandlerComponent implements OnInit {
     const error = OAuth2RedirectHandlerComponent.getUrlParameter('error');
 
     if (accessToken) {
-      sessionStorage.setItem("token", accessToken);
-      localStorage.setItem("token", accessToken);
-      this.cookieService.set("token", "test");
-
       this.storageService.saveJwtOauth(accessToken)
       this.router.navigate(['/profile'], {state: {from: this.route.snapshot.url}});
     } else {

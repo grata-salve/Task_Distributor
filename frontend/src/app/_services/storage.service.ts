@@ -17,7 +17,8 @@ export class StorageService {
   }
 
   public saveJwtOauth(accessToken: any): void {
-    this.cookieService.set(ACCESS_TOKEN, accessToken)
+    this.cookieService.set(ACCESS_TOKEN, accessToken, COOKIE_EXPIRY_DAYS,
+      "/", "localhost")
   }
 
   public getJwt(): any {
