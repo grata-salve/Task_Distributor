@@ -33,9 +33,6 @@ public class Token extends AbstractIdentifiable {
 
   private boolean revoked;
 
-  private boolean expired;
-
   @ManyToOne
-  @JoinColumn(name = "user_id")
   private User user;
 }

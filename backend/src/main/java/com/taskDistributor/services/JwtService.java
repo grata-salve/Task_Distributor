@@ -35,7 +35,6 @@ public class JwtService {
         .user(user)
         .token(jwtToken)
         .tokenType(TokenType.BEARER)
-        .expired(false)
         .revoked(false)
         .build();
     tokenRepository.save(token);
@@ -45,10 +44,7 @@ public class JwtService {
     var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
     if (validUserTokens.isEmpty())
       return;
-    validUserTokens.forEach(token -> {
-      token.setExpired(true);
-      token.setRevoked(true);
-    });
+    validUserTokens.forEach(token -> token.setRevoked(true));
     tokenRepository.saveAll(validUserTokens);
   }
 

@@ -1,5 +1,6 @@
 package com.taskDistributor.security;
 
+import com.taskDistributor.models.auth.Token;
 import com.taskDistributor.repositories.TokenRepository;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -64,8 +65,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isTokenValid(String jwt) {
-        return tokenRepository.findByToken(jwt)
-            .map(t -> !t.isExpired() && !t.isRevoked())
-            .orElse(false);
+        return !tokenRepository.findByToken(jwt)
+            .map(Token::isRevoked)
+            .orElse(true);
     }
 }
