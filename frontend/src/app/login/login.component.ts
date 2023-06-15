@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { StorageService } from '../_services/storage.service';
 import {UserService} from "../_services/user.service";
+import {GOOGLE_AUTH_URL} from "../constants/app.constants";
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   userDetails: string = '';
+  googleUrl = GOOGLE_AUTH_URL
 
   constructor(private authService: AuthService, private storageService: StorageService,
               private userService: UserService) { }
@@ -25,16 +27,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      this.roles = this.storageService.getJwt().roles;
       this.loadUser()
     }
   }
 
-
   public loadUser() {
     this.userService.getUser().subscribe({
         next: data => {
-          this.storageService.saveUserDetails(data);
+          this.storageService.saveUser(data);
         },
         error: err => {
           this.errorMessage = err.error.message;
@@ -43,17 +44,15 @@ export class LoginComponent implements OnInit {
     );
   }
 
-
   onSubmit(): void {
     const { email, password } = this.form;
-
     this.authService.login(email, password).subscribe({
       next: data => {
-        this.storageService.saveUser(data);
+        this.storageService.saveJwt(data);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
+        this.roles = this.storageService.getJwt().roles;
         this.reloadPage();
       },
       error: err => {

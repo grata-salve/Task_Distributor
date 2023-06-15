@@ -1,14 +1,12 @@
 package com.taskDistributor.models.auth;
 
+import com.taskDistributor.models.AbstractIdentifiable;
 import com.taskDistributor.models.User;
 import com.taskDistributor.models.enums.TokenType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -26,12 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tokens")
-public class Token {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false)
-  private Long id;
+public class Token extends AbstractIdentifiable {
 
   @Column(unique = true)
   private String token;
@@ -41,9 +33,6 @@ public class Token {
 
   private boolean revoked;
 
-  private boolean expired;
-
   @ManyToOne
-  @JoinColumn(name = "user_id")
   private User user;
 }

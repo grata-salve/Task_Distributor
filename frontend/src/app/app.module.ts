@@ -14,6 +14,8 @@ import { BoardModeratorComponent } from './board-moderator/board-moderator.compo
 import { BoardUserComponent } from './board-user/board-user.component';
 
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
+import { OAuth2RedirectHandlerComponent } from './oauth2-redirect-handler/oauth2-redirect-handler.component';
+import { CookieService } from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { httpInterceptorProviders } from './_helpers/http.interceptor';
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    OAuth2RedirectHandlerComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,10 @@ import { httpInterceptorProviders } from './_helpers/http.interceptor';
     FormsModule,
     HttpClientModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

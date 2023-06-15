@@ -8,7 +8,7 @@ const API_URL = `${environment.apiBaseUrl}/logs`
 @Injectable({
   providedIn: 'root'
 })
-export class ActionLogsService {
+export class ActionLogService {
 
   constructor(private httpClient: HttpClient) {
   }

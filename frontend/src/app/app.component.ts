@@ -54,5 +54,7 @@ export class AppComponent {
         console.log(err);
       }
     });
+
+    this.storageService.logout()
   }
 }

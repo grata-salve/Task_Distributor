@@ -1,83 +1,46 @@
 package com.taskDistributor.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Collection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- * User class.
- */
 @Entity
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
-public class User extends AbstractIdentifiable implements UserDetails {
+public class User extends AbstractIdentifiable {
 
-  @NotBlank
-  private String firstname;
+    @Column(nullable = false)
+    private String name;
 
-  @NotBlank
-  private String lastname;
+    @Email
+    @Column(nullable = false)
+    private String email;
 
-  @NotBlank
-  @Email
-  private String email;
+    private String imageUrl;
 
-  @NotBlank
-  private String password;
+    @Column(nullable = false)
+    private Boolean emailVerified;
 
-  @Override
-  @JsonIgnore
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
-  }
+    @JsonIgnore
+    private String password;
 
-  @Override
-  @JsonIgnore
-  public String getPassword() {
-    return password;
-  }
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
 
-  @Override
-  @JsonIgnore
-  public String getUsername() {
-    return email;
-  }
-
-  @Override
-  @JsonIgnore
-  public boolean isAccountNonExpired() {
-    return true;
-  }
-
-  @Override
-  @JsonIgnore
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-
-  @Override
-  @JsonIgnore
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-
-  @Override
-  @JsonIgnore
-  public boolean isEnabled() {
-    return true;
-  }
+    private String providerId;
 }

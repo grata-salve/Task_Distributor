@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserTasksRepository extends JpaRepository<UserTask, Long> {
+public interface UserTaskRepository extends JpaRepository<UserTask, Long> {
 
   @Query("SELECT ut.task FROM UserTask ut WHERE ut.user.id = :userId")
   Optional<List<Task>> findAllTasksByUserId(@Param("userId") Long userId);

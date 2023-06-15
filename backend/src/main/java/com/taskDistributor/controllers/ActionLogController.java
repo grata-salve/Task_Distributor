@@ -11,9 +11,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/logs")
 @RequiredArgsConstructor
-public class ActionLogsController {
+public class ActionLogController {
 
     private final ActionLogService actionLogService;
+
+    //TODO: @Valid in all controllers.
 
     @GetMapping("/get/{logId}")
     @ResponseStatus(HttpStatus.OK)

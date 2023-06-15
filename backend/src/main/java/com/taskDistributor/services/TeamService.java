@@ -16,6 +16,7 @@ public class TeamService {
   private final TeamRepository teamRepository;
   private final TeamMapper teamMapper;
 
+  @Transactional
   public TeamDto createTeam(TeamDto teamDto) {
     Team team = teamRepository.save(teamMapper.toModel(teamDto));
     return teamMapper.toDto(team);
@@ -36,6 +37,7 @@ public class TeamService {
     return teamMapper.toDto(team);
   }
 
+  @Transactional
   public TeamDto deleteTeam(Long teamId) {
     Team team = teamRepository.findById(teamId).orElseThrow(TeamNotFoundException::new);
     teamRepository.deleteById(teamId);
