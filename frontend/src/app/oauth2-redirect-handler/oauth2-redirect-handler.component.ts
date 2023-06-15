@@ -22,7 +22,7 @@ export class OAuth2RedirectHandlerComponent implements OnInit {
 
     if (accessToken) {
       this.storageService.saveJwtOauth(accessToken)
-      this.router.navigate(['/profile'], {state: {from: this.route.snapshot.url}});
+      this.router.navigate(['/login'], {state: {from: this.route.snapshot.url}});
     } else {
       this.router.navigate(['/login'], {state: {from: this.route.snapshot.url, error: error}});
     }

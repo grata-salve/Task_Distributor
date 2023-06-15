@@ -1,5 +1,11 @@
 package com.taskDistributor.services;
 
+import com.taskDistributor.models.User;
+import com.taskDistributor.models.auth.Token;
+import com.taskDistributor.models.enums.TokenType;
+import com.taskDistributor.repositories.TokenRepository;
+import com.taskDistributor.repositories.UserRepository;
+import com.taskDistributor.security.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,65 +16,47 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
-  private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+  private final TokenRepository tokenRepository;
+  private final TokenProvider tokenProvider;
+  private final UserRepository userRepository;
 
-  public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject);
+  private void saveUserToken(User user, String jwtToken) {
+    var token = Token.builder()
+        .user(user)
+        .token(jwtToken)
+        .tokenType(TokenType.BEARER)
+        .expired(false)
+        .revoked(false)
+        .build();
+    tokenRepository.save(token);
   }
 
-  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-    final Claims claims = extractAllClaims(token);
-    return claimsResolver.apply(claims);
+  private void revokeAllUserTokens(User user) {
+    var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+    if (validUserTokens.isEmpty())
+      return;
+    validUserTokens.forEach(token -> {
+      token.setExpired(true);
+      token.setRevoked(true);
+    });
+    tokenRepository.saveAll(validUserTokens);
   }
 
-  public String generateToken(UserDetails userDetails) {
-    return generateToken(new HashMap<>(), userDetails);
-  }
-
-  public String generateToken(
-      Map<String, Object> extraClaims,
-      UserDetails userDetails
-  ) {
-    return Jwts
-        .builder()
-        .setClaims(extraClaims)
-        .setSubject(userDetails.getUsername())
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-        .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-        .compact();
-  }
-
-  public boolean isTokenValid(String token, UserDetails userDetails) {
-    final String username = extractUsername(token);
-    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-  }
-
-  private boolean isTokenExpired(String token) {
-    return extractExpiration(token).before(new Date());
-  }
-
-  private Date extractExpiration(String token) {
-    return extractClaim(token, Claims::getExpiration);
-  }
-
-  private Claims extractAllClaims(String token) {
-    return Jwts
-        .parserBuilder()
-        .setSigningKey(getSignInKey())
-        .build()
-        .parseClaimsJws(token)
-        .getBody();
-  }
-
-  private Key getSignInKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-    return Keys.hmacShaKeyFor(keyBytes);
+  public String tokenProcessing(Authentication authentication, String email) {
+    var jwtToken = tokenProvider.createToken(authentication);
+    var user = userRepository.findByEmail(email).orElseThrow();
+    revokeAllUserTokens(user);
+    saveUserToken(user, jwtToken);
+    return jwtToken;
   }
 }
